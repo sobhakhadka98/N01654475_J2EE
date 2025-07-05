@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Employee Directory</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Employee Directory</h1>
+    <a href="/employee/add" class="btn primary">➕ Add New Employee</a>
+
+    <table class="employee-table">
+        <thead>
+        <tr>
+            <th>ID</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="emp : ${employees}">
+            <td th:text="${emp.id}"></td>
+            <td th:text="${emp.firstName}"></td>
+            <td th:text="${emp.lastName}"></td>
+            <td th:text="${emp.email}"></td>
+            <td>
+                <a th:href="@{'/employee/edit/' + ${emp.id}}" class="btn edit">Update</a>
+                <a th:href="@{'/employee/delete/' + ${emp.id}}" class="btn delete">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
