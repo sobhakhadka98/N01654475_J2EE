@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Coffee Shop - Available Coffees</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 300;
+        }
+        
+        .nav-bar {
+            background: #34495e;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .nav-bar a:hover {
+            color: #3498db;
+        }
+        
+        .nav-bar form {
+            display: inline;
+        }
+        
+        .nav-bar button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .nav-bar button:hover {
+            color: #3498db;
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        .add-coffee-btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: background-color 0.3s;
+        }
+        
+        .add-coffee-btn:hover {
+            background: #2980b9;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .action-links a {
+            color: #3498db;
+            text-decoration: none;
+            margin-right: 1rem;
+            font-weight: 500;
+        }
+        
+        .action-links a:hover {
+            color: #2980b9;
+        }
+        
+        .price {
+            font-weight: 600;
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Coffee Shop - Available Coffees</h1>
+        </div>
+
+        <div class="nav-bar">
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/coffees}">Coffees</a>
+            <a th:href="@{/orders}" sec:authorize="isAuthenticated()">Orders</a>
+            <div style="float: right;">
+                <a th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
+                <a th:href="@{/register}" sec:authorize="!isAuthenticated()">Register</a>
+                <form th:action="@{/logout}" method="post" style="display: inline;" sec:authorize="isAuthenticated()">
+                    <button type="submit" style="background: none; border: none; color: #667eea; cursor: pointer; font-weight: 500;">Logout</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="content">
+            <a href="/coffees/add" class="add-coffee-btn" sec:authorize="isAuthenticated()">Add New Coffee</a>
+            
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="coffee : ${coffees}">
+                    <td th:text="${coffee.id}"></td>
+                    <td th:text="${coffee.name}"></td>
+                    <td class="price" th:text="${'$' + coffee.price}"></td>
+                    <td th:text="${coffee.description}"></td>
+                    <td class="action-links">
+                        <a th:href="@{/coffees/{id}(id=${coffee.id})}">View</a>
+                        <a th:href="@{/coffees/edit/{id}(id=${coffee.id})}" sec:authorize="isAuthenticated()">Edit</a>
+                        <a th:href="@{/coffees/delete/{id}(id=${coffee.id})}" sec:authorize="isAuthenticated()">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

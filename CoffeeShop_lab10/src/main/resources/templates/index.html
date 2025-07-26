@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Shop - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .nav-bar {
+            background: #34495e;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-right: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: #3498db;
+        }
+        
+        .nav-links form {
+            display: inline;
+        }
+        
+        .nav-links button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .nav-links button:hover {
+            color: #3498db;
+        }
+        
+        .welcome-message {
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .welcome-message h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .welcome-message p {
+            color: #555;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .cta-btn.primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .cta-btn.primary:hover {
+            background: #2980b9;
+        }
+        
+        .cta-btn.secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .cta-btn.secondary:hover {
+            background: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-bar">
+            <div class="nav-links">
+                <a th:href="@{/}">Home</a>
+                <a th:href="@{/coffees}">Coffees</a>
+                <a th:href="@{/orders}" sec:authorize="isAuthenticated()">Orders</a>
+            </div>
+            <div class="nav-links">
+                <a th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
+                <a th:href="@{/register}" sec:authorize="!isAuthenticated()">Register</a>
+                <form th:action="@{/logout}" method="post" style="display: inline;" sec:authorize="isAuthenticated()">
+                    <button type="submit" style="background: none; border: none; color: white; cursor: pointer; font-weight: 500;">Logout</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="header">
+            <h1>Java Beans & Bytes</h1>
+            <p>Your Cozy Corner for Coffee and Code Enthusiasts!</p>
+        </div>
+
+        <div class="welcome-message">
+            <h2>Welcome to Our Coffee Shop!</h2>
+            <p th:text="${message}">Discover our amazing selection of coffees and start your day with the perfect brew.</p>
+            
+            <div class="cta-buttons">
+                <a href="/coffees" class="cta-btn primary">Browse Our Coffees</a>
+                <a th:href="@{/register}" class="cta-btn secondary" sec:authorize="!isAuthenticated()">Join Us Today</a>
+                <a th:href="@{/orders}" class="cta-btn secondary" sec:authorize="isAuthenticated()">View Orders</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
