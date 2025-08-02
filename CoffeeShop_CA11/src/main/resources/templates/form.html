@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Employee Form</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+
+<header>
+    <h1>Coffee Shop Employee Manager</h1>
+</header>
+
+<div class="form-container">
+    <h2 th:text="${employee.id == 0} ? 'Add Employee' : 'Edit Employee'"></h2>
+
+    <form th:action="@{/employee/save}" th:object="${employee}" method="post">
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="form-group">
+            <label for="name">First Name</label>
+            <input type="text" th:field="*{firstName}" id="name" />
+            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="department">Last Name</label>
+            <input type="text" th:field="*{lastName}" id="department"  />
+            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" th:field="*{email}" id="email"  />
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span>
+        </div>
+
+        <button type="submit">Save</button>
+    </form>
+</div>
+
+<footer>
+    <p>© 2025 Coffee Shop Employee System — All rights reserved</p>
+</footer>
+
+</body>
+</html>
