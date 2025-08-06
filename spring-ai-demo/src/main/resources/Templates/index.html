@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Spring AI Demo Operations</title>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; }
+    .container { max-width: 600px; margin: auto; padding: 20px; background-color: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 8px; }
+    h1 { text-align: center; color: #333; }
+    form { margin-bottom: 20px; }
+    label { display: block; margin-bottom: 8px; font-size: 14px; color: #333; }
+    input[type="text"] { width: calc(100% - 22px); padding: 10px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px; }
+    button { padding: 10px 20px; font-size: 14px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background-color: #45a049; }
+    .result { background: #f8f8f8; padding: 12px; margin-top: 10px; border-left: 5px solid #4CAF50; font-size: 14px; }
+    img { max-width: 100%; margin-top: 10px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Spring AI Operations</h1>
+
+  <form th:action="@{/ask-ai}" method="post">
+    <label for="prompt">Ask AI anything:</label>
+    <input type="text" id="prompt" name="prompt" required/>
+    <button type="submit">Ask</button>
+    <div th:if="${aiResponse}" class="result">
+      <b>AI Response:</b>
+      <span th:text="${aiResponse}"></span>
+    </div>
+  </form>
+
+  <form th:action="@{/city-guide}" method="post">
+    <label for="city">City:</label>
+    <input type="text" id="city" name="city" required/>
+
+    <label for="interest">Interest:</label>
+    <input type="text" id="interest" name="interest" required/>
+
+    <button type="submit">Get Guide</button>
+    <div th:if="${guideResponse}" class="result">
+      <b>Guide:</b>
+      <span th:text="${guideResponse}"></span>
+    </div>
+  </form>
+
+  <form th:action="@{/generate-image}" method="post">
+    <label for="imagePrompt">Generate Image via AI:</label>
+    <input type="text" id="imagePrompt" name="imagePrompt" required/>
+    <button type="submit">Generate</button>
+    <div th:if="${imageUrl}" class="result">
+      <b>Generated Image:</b>
+      <img th:src="${imageUrl}" alt="AI Generated Image"/>
+    </div>
+  </form>
+</div>
+</body>
+</html>
